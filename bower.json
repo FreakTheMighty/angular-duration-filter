@@ -1,0 +1,16 @@
+{
+  "name": "angular-duration-filter",
+  "version": "0.0.1",
+  "homepage": "https://github.com/cbellino/angular-duration-filter",
+  "authors": [
+    "Colin Bellino <bellino.colin@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
