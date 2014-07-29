@@ -16,7 +16,7 @@ angular.module('filter.duration', ['ng'])
             },
             'other': {
                 year: '{} years',
-                month: '{} monthes',
+                month: '{} months',
                 week: '{} weeks',
                 day: '{} days',
                 hour: '{} hours',
