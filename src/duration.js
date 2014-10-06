@@ -12,7 +12,8 @@ angular.module('filter.duration', ['ng'])
                 day: '{} day',
                 hour: '{} hour',
                 minute: '{} minute',
-                second: '{} second'
+                second: '{} second',
+                millisecond: '{} millisecond'
             },
             'other': {
                 year: '{} years',
@@ -21,28 +22,28 @@ angular.module('filter.duration', ['ng'])
                 day: '{} days',
                 hour: '{} hours',
                 minute: '{} minutes',
-                second: '{} seconds'
+                second: '{} seconds',
+                millisecond: '{} milliseconds'
             }
         };
     }])
 
     .filter('duration', ['$locale', '$localeDurations', function ($locale, $localeDurations) {
-        return function duration(value, unit, precision) {
-
-            var unitNames = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'],
+        var unitNames = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second', 'millisecond'],
                 units = {
-                    year: 86400*365.25,
-                    month: 86400*31,
-                    week: 86400*7,
-                    day: 86400,
-                    hour: 3600,
-                    minute: 60,
-                    second: 1
+                    year: 1000*86400*365.25,
+                    month: 1000*86400*31,
+                    week: 1000*86400*7,
+                    day: 1000*86400,
+                    hour: 1000*3600,
+                    minute: 1000*60,
+                    second: 1000*1,
+                    millisecond: 1
                 },
                 words = [],
                 maxUnits = unitNames.length;
-
-
+                
+        return function duration(value, unit, precision) {
             precision = parseInt(precision, 10) || units[precision || 'second'] || 1;
             value = (parseInt(value, 10) || 0) * (units[unit || 'second'] || 1);
 
