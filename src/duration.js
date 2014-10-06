@@ -29,7 +29,10 @@ angular.module('filter.duration', ['ng'])
     }])
 
     .filter('duration', ['$locale', '$localeDurations', function ($locale, $localeDurations) {
-        var unitNames = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second', 'millisecond'],
+        
+                
+        return function duration(value, unit, precision) {
+            var unitNames = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second', 'millisecond'],
                 units = {
                     year: 1000*86400*365.25,
                     month: 1000*86400*31,
@@ -42,10 +45,8 @@ angular.module('filter.duration', ['ng'])
                 },
                 words = [],
                 maxUnits = unitNames.length;
-                
-        return function duration(value, unit, precision) {
-            precision = parseInt(precision, 10) || units[precision || 'second'] || 1;
-            value = (parseInt(value, 10) || 0) * (units[unit || 'second'] || 1);
+            precision = parseInt(precision, 10) || units[precision || 'millisecond'] || 1;
+            value = (parseInt(value, 10) || 0) * (units[unit || 'millisecond'] || 1);
 
             if (value >= precision) {
                 value = Math.round(value / precision) * precision;
