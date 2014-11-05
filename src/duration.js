@@ -31,7 +31,7 @@ angular.module('filter.duration', ['ng'])
     .filter('duration', ['$locale', '$localeDurations', function ($locale, $localeDurations) {
         
                 
-        return function duration(value, unit, precision) {
+        return function duration(value, unit, precision, format) {
             var unitNames = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second', 'millisecond'],
                 units = {
                     year: 1000*86400*365.25,
@@ -61,7 +61,7 @@ angular.module('filter.duration', ['ng'])
                     unitValue = Math.floor(value / units[unitName]);
 
                 if (unitValue !== 0) {
-                    words.push(($localeDurations[unitValue] || $localeDurations[$locale.pluralCat(unitValue)] || {unitName: ('{} ' + unitName)})[unitName].replace('{}', unitValue));
+                    format = format.replace(unitName, unitValue);
                     if (--maxUnits === 0) {
                         break;
                     }
@@ -69,7 +69,7 @@ angular.module('filter.duration', ['ng'])
 
                 value = value % units[unitName];
             }
-
-            return words.join(' ');
+            
+            return format;
         };
     }]);
