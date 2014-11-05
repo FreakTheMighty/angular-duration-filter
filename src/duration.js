@@ -30,7 +30,12 @@ angular.module('filter.duration', ['ng'])
 
     .filter('duration', ['$locale', '$localeDurations', function ($locale, $localeDurations) {
         
-                
+        function pad(n, width, z) {
+          z = z || '0';
+          n = n + '';
+          return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+        }
+
         return function duration(value, unit, precision, format) {
             var unitNames = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second', 'millisecond'],
                 units = {
@@ -60,11 +65,15 @@ angular.module('filter.duration', ['ng'])
                 var unitName = unitNames[i],
                     unitValue = Math.floor(value / units[unitName]);
 
-                if (unitValue !== 0) {
-                    format = format.replace(unitName, unitValue);
-                    if (--maxUnits === 0) {
-                        break;
-                    }
+                    var formatted=unitValue;
+                
+                if(['minute','second'].indexOf(unitName)>-1){
+                  formatted = pad(unitValue,2);
+                }
+                  
+                format = format.replace(unitName, formatted);
+                if (--maxUnits === 0) {
+                    break;
                 }
 
                 value = value % units[unitName];
