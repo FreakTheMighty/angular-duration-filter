@@ -59,13 +59,22 @@ angular.module('filter.duration', ['ng'])
                 maxUnits = 1;
             }
 
+            var major = ['year', 'month', 'day'];
             var i, n;
             for (i = 0, n = unitNames.length; i < n && value !== 0; i++) {
 
                 var unitName = unitNames[i],
                     unitValue = Math.floor(value / units[unitName]);
 
-                    var formatted=unitValue;
+                var formatted=unitValue;
+                
+                if (major.indexOf(unitName)>-1 && unitValue>0){
+                  
+                  var pluralize = 'one';
+                  if(unitValue>1){ pluralize='other'; }
+                  var unitLable = $localeDurations[pluralize][unitName];
+                  return unitLable.replace('{}',unitValue);
+                }
                 
                 if(['minute','second'].indexOf(unitName)>-1){
                   formatted = pad(unitValue,2);
